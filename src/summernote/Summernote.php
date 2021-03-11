@@ -1,12 +1,12 @@
 <?php
 
 
-namespace App\WYSIWYG;
+namespace App\WYSIWYG\Summernote;
 
 
 use App\Components\Helpers\Assets;
 
-class SummerNote
+class Summernote
 {
     private string $template;
 
