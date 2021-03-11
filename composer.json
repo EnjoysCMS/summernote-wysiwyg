@@ -15,6 +15,6 @@
     "use-migrations": false
   },
   "scripts": {
-    "post-install-cmd": "yarn install"
+    "post-update-cmd": "yarn install"
   }
 }
