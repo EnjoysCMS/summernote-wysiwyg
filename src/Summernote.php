@@ -11,16 +11,21 @@ use App\Components\WYSIWYG\WysiwygInterface;
 
 class Summernote implements WysiwygInterface
 {
-    private string $template;
+    private string $twigTemplate;
 
-    public function __construct(string $mode = 'basic')
+    public function __construct(string $twigTemplate = null)
     {
-        $this->template = '@wysisyg/summernote/src/template/' . $mode . '.tpl';
+        $this->twigTemplate = $twigTemplate ?? '@wysisyg/summernote/src/template/basic.tpl';
         $this->initialize();
     }
 
     private function initialize()
     {
+
+        if(!file_exists( __DIR__ . '/../node_modules/summernote')){
+            throw new \Exception('Выполните yarn install');
+        }
+
         Assets::createSymlink(
             'assets/WYSIWYG/summernote/node_modules/summernote/dist',
             __DIR__ . '/../node_modules/summernote/dist'
@@ -42,9 +47,9 @@ class Summernote implements WysiwygInterface
     /**
      * @return string
      */
-    public function getTemplate(): string
+    public function getTwigTemplate(): string
     {
-        return $this->template;
+        return $this->twigTemplate;
     }
 
 }
