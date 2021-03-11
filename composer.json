@@ -11,10 +11,7 @@
     }
   },
   "extra": {
-    "module-name": "Wysiwyg editor",
+    "module-name": "Summernote WYSIWYG Editor",
     "use-migrations": false
-  },
-  "scripts": {
-    "post-update-cmd": "yarn install"
   }
 }
