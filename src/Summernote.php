@@ -1,10 +1,13 @@
 <?php
+
 declare(strict_types=1);
 
 namespace EnjoysCMS\WYSIWYG\Summernote;
 
+
 use App\Components\Helpers\Assets;
 use App\Components\WYSIWYG\WysiwygInterface;
+
 
 class Summernote implements WysiwygInterface
 {
@@ -12,17 +15,16 @@ class Summernote implements WysiwygInterface
 
     public function __construct(string $mode = 'basic')
     {
-        $this->template = __DIR__ . '/template/' . $mode . '.tpl';
-
-        if (!file_exists($this->template)) {
-            throw new \Exception(sprintf('Нет шаблона в по указанному пути: %s', $this->template));
-        }
-
+        $this->template = '@wysisyg/summernote/src/template/' . $mode . '.tpl';
         $this->initialize();
     }
 
     private function initialize()
     {
+        Assets::createSymlink(
+            'assets/WYSIWYG/summernote/node_modules/summernote/dist',
+            __DIR__ . '/../node_modules/summernote/dist'
+        );
         Assets::css(
             [
                 __DIR__ . '/../node_modules/summernote/dist/summernote-bs4.min.css'
@@ -32,7 +34,7 @@ class Summernote implements WysiwygInterface
         Assets::js(
             [
                 __DIR__ . '/../node_modules/summernote/dist/summernote-bs4.min.js',
-                __DIR__ . '/../node_modules/summernote/lang/summernote-ru-RU.js'
+                __DIR__ . '/../node_modules/summernote/dist/lang/summernote-ru-RU.min.js'
             ]
         );
     }
