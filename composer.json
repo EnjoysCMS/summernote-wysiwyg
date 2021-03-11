@@ -13,5 +13,8 @@
   "extra": {
     "module-name": "Wysiwyg editor",
     "use-migrations": false
+  },
+  "scripts": {
+    "post-install-cmd": "yarn install"
   }
 }
