@@ -1,7 +1,7 @@
 <?php
 
 
-namespace App\WYSIWYG\Summernote;
+namespace EnjoysCMS\WYSIWYG\Summernote;
 
 
 use App\Components\Helpers\Assets;
