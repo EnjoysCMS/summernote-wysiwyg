@@ -5,8 +5,8 @@ declare(strict_types=1);
 namespace EnjoysCMS\WYSIWYG\Summernote;
 
 
-use App\Components\Helpers\Assets;
-use App\Components\WYSIWYG\WysiwygInterface;
+use EnjoysCMS\Core\Components\Helpers\Assets;
+use EnjoysCMS\Core\Components\WYSIWYG\WysiwygInterface;
 
 
 class Summernote implements WysiwygInterface
