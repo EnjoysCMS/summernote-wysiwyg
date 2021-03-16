@@ -22,24 +22,25 @@ class Summernote implements WysiwygInterface
     private function initialize()
     {
 
-        if(!file_exists( __DIR__ . '/../node_modules/summernote')){
-            throw new \Exception('Выполните yarn install');
+        if(!file_exists( __DIR__ . '/../assets/summernote')){
+            exec('cd '. __DIR__.'/../ && yarn install --modules-folder ./assets');
+            //throw new \Exception('Выполните yarn install');
         }
 
         Assets::createSymlink(
-            'assets/WYSIWYG/summernote/node_modules/summernote/dist',
-            __DIR__ . '/../node_modules/summernote/dist'
+            'assets/WYSIWYG/summernote/assets/summernote/dist',
+            __DIR__ . '/../assets/summernote/dist'
         );
         Assets::css(
             [
-                __DIR__ . '/../node_modules/summernote/dist/summernote-bs4.min.css'
+                __DIR__ . '/../assets/summernote/dist/summernote-bs4.min.css'
             ]
         );
 
         Assets::js(
             [
-                __DIR__ . '/../node_modules/summernote/dist/summernote-bs4.min.js',
-                __DIR__ . '/../node_modules/summernote/dist/lang/summernote-ru-RU.min.js'
+                __DIR__ . '/../assets/summernote/dist/summernote-bs4.min.js',
+                __DIR__ . '/../assets/summernote/dist/lang/summernote-ru-RU.min.js'
             ]
         );
     }
