@@ -13,5 +13,8 @@
   "extra": {
     "module-name": "Summernote WYSIWYG Editor",
     "use-migrations": false
+  },
+  "scripts": {
+    "yarn": "yarn install"
   }
 }
