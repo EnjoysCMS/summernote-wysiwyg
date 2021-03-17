@@ -23,7 +23,7 @@ class Summernote implements WysiwygInterface
     {
 
         if(!file_exists( __DIR__ . '/../assets/summernote')){
-            exec('cd '. __DIR__.'/../ && yarn install --modules-folder ./assets');
+            exec('cd '. __DIR__.'/../ && yarn install');
             //throw new \Exception('Выполните yarn install');
         }
 
