@@ -1,0 +1,16 @@
+{
+  "systemParams": "linux-x64-64",
+  "modulesFolders": [
+    "assets"
+  ],
+  "flags": [],
+  "linkedModules": [],
+  "topLevelPatterns": [
+    "summernote@^0.8.18"
+  ],
+  "lockfileEntries": {
+    "summernote@^0.8.18": "https://registry.yarnpkg.com/summernote/-/summernote-0.8.18.tgz#be5c368b1c92de8a05039a9976157bdea7aae386"
+  },
+  "files": [],
+  "artifacts": {}
+}
