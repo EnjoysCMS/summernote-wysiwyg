@@ -19,12 +19,15 @@ class Summernote implements WysiwygInterface
         $this->initialize();
     }
 
+    /**
+     * @throws \Exception
+     */
     private function initialize()
     {
 
         if(!file_exists( __DIR__ . '/../assets/summernote')){
-            exec('cd '. __DIR__.'/../ && yarn install');
-            //throw new \Exception('Выполните yarn install');
+//            exec('cd '. __DIR__.'/../ && yarn install');
+            throw new \Exception(sprintf('Run: %s', 'cd '. __DIR__.'/../ && yarn install'));
         }
 
         Assets::createSymlink(
