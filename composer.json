@@ -15,6 +15,7 @@
     "use-migrations": false
   },
   "scripts": {
-    "yarn": "yarn install"
+    "post-install-cmd": "cd ./WYSIWYG/summernote && yarn install",
+    "post-update-cmd": "@post-install-cmd"
   }
 }
