@@ -15,6 +15,7 @@
     "use-migrations": false
   },
   "scripts": {
-    "post-install-cmd": "cd ./WYSIWYG/summernote && yarn install"
+    "assets-instal": "cd ./WYSIWYG/summernote && yarn install"
+
   }
 }
