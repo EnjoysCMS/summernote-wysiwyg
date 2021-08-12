@@ -4,7 +4,9 @@ declare(strict_types=1);
 
 
 use DI\Container;
+use DI\Definition\Source\DefinitionArray;
 use Enjoys\AssetsCollector\Assets;
+use Enjoys\AssetsCollector\Environment;
 use EnjoysCMS\Core\Components\Helpers;
 use EnjoysCMS\WYSIWYG\Summernote\NotSetupVendor;
 use EnjoysCMS\WYSIWYG\Summernote\Summernote;
@@ -13,10 +15,29 @@ use PHPUnit\Framework\TestCase;
 class SummernoteTest extends TestCase
 {
 
+    /**
+     * @throws Exception
+     */
     protected function setUp(): void
     {
-        $DI = new Container();
+        $DI = new Container(
+            new DefinitionArray([
+                                    Enjoys\AssetsCollector\Assets::class => function () {
+                                        $env = new Environment('_compile');
+                                        $env->setBaseUrl('_compile');
+                                        return new Assets($env);
+                                    },
+
+                                ])
+        );
+
         Helpers\Assets::setContainer($DI);
+        Helpers\Assets::setContainer($DI);
+    }
+
+    protected function tearDown(): void
+    {
+        $this->removeDirectoryRecursive(__DIR__ . '/_compile', true);
     }
 
     public function testNotSetupVendor()
@@ -36,12 +57,14 @@ class SummernoteTest extends TestCase
 
     public function testCheckAssets()
     {
-
         $assets = Helpers\Assets::getContainer()->get(Assets::class);
         new Summernote('test');
         $this->assertStringContainsString('node_modules/summernote/dist/summernote-bs4.min.css', $assets->get('css'));
         $this->assertStringContainsString('node_modules/summernote/dist/summernote-bs4.min.js', $assets->get('js'));
-        $this->assertStringContainsString('node_modules/summernote/dist/lang/summernote-ru-RU.min.js', $assets->get('js'));
+        $this->assertStringContainsString(
+            'node_modules/summernote/dist/lang/summernote-ru-RU.min.js',
+            $assets->get('js')
+        );
     }
 
     private function removeDirectoryRecursive($path, $removeParent = false)
