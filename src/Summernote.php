@@ -11,12 +11,31 @@ use EnjoysCMS\Core\Components\WYSIWYG\WysiwygInterface;
 
 class Summernote implements WysiwygInterface
 {
-    private string $twigTemplate;
+    private string $twigTemplate = '@wysisyg/summernote/src/template/basic.tpl';
 
+    /**
+     * @throws NotSetupVendor
+     * @throws \Exception
+     */
     public function __construct(string $twigTemplate = null)
     {
-        $this->twigTemplate = $twigTemplate ?? '@wysisyg/summernote/src/template/basic.tpl';
+        if ($twigTemplate !== null) {
+            $this->setTwigTemplate($twigTemplate);
+        }
+
+        if (!file_exists(__DIR__ . '/../node_modules/summernote')) {
+            throw new NotSetupVendor(sprintf('Run: cd %s/../ && yarn install', __DIR__));
+        }
+
         $this->initialize();
+    }
+
+    /**
+     * @param string $twigTemplate
+     */
+    public function setTwigTemplate(string $twigTemplate): void
+    {
+        $this->twigTemplate = $twigTemplate;
     }
 
     /**
@@ -24,26 +43,16 @@ class Summernote implements WysiwygInterface
      */
     private function initialize()
     {
-
-        if(!file_exists( __DIR__ . '/../assets/summernote')){
-//            exec('cd '. __DIR__.'/../ && yarn install');
-            throw new \Exception(sprintf('Run: %s', 'cd '. __DIR__.'/../ && yarn install'));
-        }
-
-        Assets::createSymlink(
-            'assets/WYSIWYG/summernote/assets/summernote/dist',
-            __DIR__ . '/../assets/summernote/dist'
-        );
         Assets::css(
             [
-                __DIR__ . '/../assets/summernote/dist/summernote-bs4.min.css'
+                __DIR__ . '/../node_modules/summernote/dist/summernote-bs4.min.css'
             ]
         );
 
         Assets::js(
             [
-                __DIR__ . '/../assets/summernote/dist/summernote-bs4.min.js',
-                __DIR__ . '/../assets/summernote/dist/lang/summernote-ru-RU.min.js'
+                __DIR__ . '/../node_modules/summernote/dist/summernote-bs4.min.js',
+                __DIR__ . '/../node_modules/summernote/dist/lang/summernote-ru-RU.min.js'
             ]
         );
     }

@@ -2,9 +2,6 @@
   "name": "enjoyscms/summernote",
   "description": "Wysiwyg Summernote for EnjoysCMS",
   "type": "enjoyscms-wysiwyg",
-  "require": {
-    "oomphinc/composer-installers-extender": "^2.0"
-  },
   "autoload": {
     "psr-4": {
       "EnjoysCMS\\WYSIWYG\\Summernote\\": "src/"
@@ -16,6 +13,10 @@
   },
   "scripts": {
     "assets-install": "cd ./WYSIWYG/summernote && yarn install"
-
+  },
+  "require-dev": {
+    "enjoys/assets-collector": "^2.0",
+    "enjoyscms/core": "> 1.0",
+    "phpunit/phpunit": "^9.5"
   }
 }
