@@ -43,6 +43,9 @@ class Summernote implements WysiwygInterface
      */
     private function initialize()
     {
+        $path = str_replace($_ENV['PROJECT_DIR'], '', realpath(__DIR__.'/../'));
+        Assets::createSymlink(sprintf('%s/assets%s/node_modules/summernote/dist', $_ENV['PUBLIC_DIR'], $path), __DIR__ . '/../node_modules/summernote/dist');
+
         Assets::css(
             [
                 __DIR__ . '/../node_modules/summernote/dist/summernote-bs4.min.css'
