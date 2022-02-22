@@ -2,6 +2,10 @@
   "name": "enjoyscms/summernote",
   "description": "Wysiwyg Summernote for EnjoysCMS",
   "type": "enjoyscms-wysiwyg",
+  "require": {
+    "php": ">=8.0",
+    "enjoyscms/core": "^4.0"
+  },
   "autoload": {
     "psr-4": {
       "EnjoysCMS\\WYSIWYG\\Summernote\\": "src/"
@@ -12,11 +16,11 @@
     "use-migrations": false
   },
   "scripts": {
-    "assets-install": "cd ./WYSIWYG/summernote && yarn install"
+    "assets-install": "EnjoysCMS\\WYSIWYG\\Summernote\\Composer::assetsInstall",
+    "post-install-cmd": "@assets-install",
+    "post-update-cmd": "@assets-install"
   },
   "require-dev": {
-    "enjoys/assets-collector": "^2.0",
-    "enjoyscms/core": "> 1.0",
     "phpunit/phpunit": "^9.5"
   }
 }
