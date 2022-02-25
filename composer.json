@@ -16,9 +16,8 @@
     "use-migrations": false
   },
   "scripts": {
-    "assets-install": "EnjoysCMS\\WYSIWYG\\Summernote\\Composer::assetsInstall",
-    "post-install-cmd": "@assets-install",
-    "post-update-cmd": "@assets-install"
+    "post-install-cmd": "EnjoysCMS\\WYSIWYG\\Summernote\\Composer::assetsInstall",
+    "post-update-cmd": "EnjoysCMS\\WYSIWYG\\Summernote\\Composer::assetsInstall"
   },
   "require-dev": {
     "phpunit/phpunit": "^9.5"
