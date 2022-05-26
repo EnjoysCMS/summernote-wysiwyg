@@ -22,13 +22,13 @@ class SummernoteTest extends TestCase
     {
         $DI = new Container(
             new DefinitionArray([
-                                    Enjoys\AssetsCollector\Assets::class => function () {
-                                        $env = new Environment('_compile');
-                                        $env->setBaseUrl('_compile');
-                                        return new Assets($env);
-                                    },
+                Enjoys\AssetsCollector\Assets::class => function () {
+                    $env = new Environment('_compile');
+                    $env->setBaseUrl('_compile');
+                    return new Assets($env);
+                },
 
-                                ])
+            ])
         );
 
         Helpers\Assets::setContainer($DI);

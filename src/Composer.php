@@ -2,7 +2,6 @@
 
 declare(strict_types=1);
 
-
 namespace EnjoysCMS\WYSIWYG\Summernote;
 
 use Composer\Script\Event;
