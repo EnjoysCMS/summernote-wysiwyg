@@ -2,6 +2,6 @@
   "name": "summernote",
   "license": "MIT",
   "dependencies": {
-    "summernote": "^0.8.20"
+    "summernote": "^0.8"
   }
 }
