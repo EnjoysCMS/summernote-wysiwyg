@@ -34,7 +34,7 @@ class Summernote implements WysiwygInterface
 
     public function getTwigTemplate(): string
     {
-        return $this->twigTemplate ?? '@wysisyg/summernote/src/template/basic.tpl';
+        return $this->twigTemplate ?? '@wysiwyg/summernote/template/basic.tpl';
     }
 
     /**
