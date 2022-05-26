@@ -2,6 +2,7 @@
 
 declare(strict_types=1);
 
+namespace Tests\EnjoysCMS\WYSIWYG\Summernote;
 
 use DI\Container;
 use DI\Definition\Source\DefinitionArray;
@@ -10,7 +11,13 @@ use Enjoys\AssetsCollector\Environment;
 use EnjoysCMS\Core\Components\Helpers;
 use EnjoysCMS\WYSIWYG\Summernote\NotSetupVendor;
 use EnjoysCMS\WYSIWYG\Summernote\Summernote;
+use Exception;
+use FilesystemIterator;
 use PHPUnit\Framework\TestCase;
+use Psr\Log\LoggerInterface;
+use RecursiveDirectoryIterator;
+use RecursiveIteratorIterator;
+use SplFileInfo;
 
 class SummernoteTest extends TestCase
 {
@@ -20,14 +27,19 @@ class SummernoteTest extends TestCase
      */
     protected function setUp(): void
     {
+        $_ENV['PROJECT_DIR'] = __DIR__;
+        $_ENV['PUBLIC_DIR'] = __DIR__.'/_compile';
+
         $DI = new Container(
             new DefinitionArray([
-                Enjoys\AssetsCollector\Assets::class => function () {
+                Assets::class => function () {
                     $env = new Environment('_compile');
                     $env->setBaseUrl('_compile');
                     return new Assets($env);
                 },
-
+                LoggerInterface::class => function(){
+                    return new SummernoteTestLogger();
+                }
             ])
         );
 
@@ -50,7 +62,8 @@ class SummernoteTest extends TestCase
     public function testSetupVendor()
     {
         exec('cd ' . __DIR__ . '/.. && yarn install');
-        $summernote = new Summernote('test');
+        $summernote = new Summernote();
+        $summernote->setTwigTemplate('test');
         $this->assertSame('test', $summernote->getTwigTemplate());
     }
 
