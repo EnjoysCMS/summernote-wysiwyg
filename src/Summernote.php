@@ -11,18 +11,14 @@ use EnjoysCMS\Core\Components\WYSIWYG\WysiwygInterface;
 
 class Summernote implements WysiwygInterface
 {
-    private string $twigTemplate = '@wysisyg/summernote/src/template/basic.tpl';
+    private ?string $twigTemplate = null;
 
     /**
      * @throws NotSetupVendor
      * @throws \Exception
      */
-    public function __construct(string $twigTemplate = null)
+    public function __construct()
     {
-        if ($twigTemplate !== null) {
-            $this->setTwigTemplate($twigTemplate);
-        }
-
         if (!file_exists(__DIR__ . '/../node_modules/summernote')) {
             throw new NotSetupVendor(sprintf('Run: cd %s/../ && yarn install', __DIR__));
         }
@@ -30,12 +26,15 @@ class Summernote implements WysiwygInterface
         $this->initialize();
     }
 
-    /**
-     * @param string $twigTemplate
-     */
-    public function setTwigTemplate(string $twigTemplate): void
+
+    public function setTwigTemplate(?string $twigTemplate): void
     {
         $this->twigTemplate = $twigTemplate;
+    }
+
+    public function getTwigTemplate(): string
+    {
+        return $this->twigTemplate ?? '@wysisyg/summernote/src/template/basic.tpl';
     }
 
     /**
@@ -61,12 +60,6 @@ class Summernote implements WysiwygInterface
         );
     }
 
-    /**
-     * @return string
-     */
-    public function getTwigTemplate(): string
-    {
-        return $this->twigTemplate;
-    }
+
 
 }
