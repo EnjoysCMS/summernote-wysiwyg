@@ -27,7 +27,7 @@ class SummernoteTest extends TestCase
      */
     protected function setUp(): void
     {
-        $_ENV['PROJECT_DIR'] = __DIR__;
+        putenv(sprintf('ROOT_PATH=%s', __DIR__));
         $_ENV['PUBLIC_DIR'] = __DIR__.'/_compile';
 
         $DI = new Container(
