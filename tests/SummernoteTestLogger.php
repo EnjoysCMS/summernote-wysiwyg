@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Tests\EnjoysCMS\WYSIWYG\Summernote;
+namespace Tests\EnjoysCMS\ContentEditor\Summernote;
 
 final class SummernoteTestLogger extends \Psr\Log\NullLogger
 {

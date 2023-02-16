@@ -1,19 +1,18 @@
 {
     "name": "enjoyscms/summernote",
-    "description": "Wysiwyg Summernote for EnjoysCMS",
-    "type": "enjoyscms-wysiwyg",
+    "description": "Wysiwyg Editor Summernote for EnjoysCMS",
     "require": {
         "php": "^8.0",
-        "enjoyscms/core": "^4.5 <4.8"
+        "enjoyscms/core": "^4.7"
     },
     "autoload": {
         "psr-4": {
-            "EnjoysCMS\\WYSIWYG\\Summernote\\": "src/"
+            "EnjoysCMS\\ContentEditor\\Summernote\\": "src/"
         }
     },
     "autoload-dev": {
         "psr-4": {
-            "Tests\\EnjoysCMS\\WYSIWYG\\Summernote\\": "tests/"
+            "Tests\\EnjoysCMS\\ContentEditor\\Summernote\\": "tests/"
         }
     },
     "extra": {

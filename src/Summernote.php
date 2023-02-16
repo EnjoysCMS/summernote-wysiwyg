@@ -2,23 +2,32 @@
 
 declare(strict_types=1);
 
-namespace EnjoysCMS\WYSIWYG\Summernote;
+namespace EnjoysCMS\ContentEditor\Summernote;
 
 
-use EnjoysCMS\Core\Components\Helpers\Assets;
-use EnjoysCMS\Core\Components\WYSIWYG\WysiwygInterface;
+use EnjoysCMS\Core\Components\ContentEditor\ContentEditorInterface;
+use Enjoys\AssetsCollector;
+use Psr\Log\LoggerInterface;
+use Twig\Environment;
+use Twig\Error\LoaderError;
+use Twig\Error\RuntimeError;
+use Twig\Error\SyntaxError;
 
 
-class Summernote implements WysiwygInterface
+class Summernote implements ContentEditorInterface
 {
-    private ?string $twigTemplate = null;
+    private ?string $selector = null;
 
     /**
      * @throws NotSetupVendor
      * @throws \Exception
      */
-    public function __construct()
-    {
+    public function __construct(
+        private Environment $twig,
+        private AssetsCollector\Assets $assets,
+        private LoggerInterface $logger,
+        private ?string $template = null
+    ) {
         if (!file_exists(__DIR__ . '/../node_modules/summernote')) {
             throw new NotSetupVendor(sprintf('Run: cd %s/../ && yarn install', __DIR__));
         }
@@ -26,33 +35,31 @@ class Summernote implements WysiwygInterface
         $this->initialize();
     }
 
-
-    public function setTwigTemplate(?string $twigTemplate): void
+    private function getTemplate(): ?string
     {
-        $this->twigTemplate = $twigTemplate;
-    }
-
-    public function getTwigTemplate(): string
-    {
-        return $this->twigTemplate ?? '@wysiwyg/summernote/template/basic.tpl';
+        return $this->template ?? __DIR__.'/../template/basic.tpl';
     }
 
     /**
      * @throws \Exception
      */
-    private function initialize()
+    private function initialize(): void
     {
-        $path = str_replace(getenv('ROOT_PATH'), '', realpath(__DIR__.'/../'));
+        $path = str_replace(getenv('ROOT_PATH'), '', realpath(__DIR__ . '/../'));
 
-        Assets::createSymlink(sprintf('%s/assets%s/node_modules/summernote/dist', $_ENV['PUBLIC_DIR'], $path), __DIR__ . '/../node_modules/summernote/dist');
+        AssetsCollector\Helpers::createSymlink(
+            sprintf('%s/assets%s/node_modules/summernote/dist', $_ENV['PUBLIC_DIR'], $path),
+            __DIR__ . '/../node_modules/summernote/dist',
+            $this->logger
+        );
 
-        Assets::css(
+        $this->assets->add('css',
             [
                 __DIR__ . '/../node_modules/summernote/dist/summernote-bs4.min.css'
             ]
         );
 
-        Assets::js(
+        $this->assets->add('js',
             [
                 __DIR__ . '/../node_modules/summernote/dist/summernote-bs4.min.js',
                 __DIR__ . '/../node_modules/summernote/dist/lang/summernote-ru-RU.min.js'
@@ -61,5 +68,38 @@ class Summernote implements WysiwygInterface
     }
 
 
+    public function setSelector(string $selector): void
+    {
+        $this->selector = $selector;
+    }
 
+    public function getSelector(): string
+    {
+        if ($this->selector === null) {
+            throw new \RuntimeException('Selector not set');
+        }
+        return $this->selector;
+    }
+
+    /**
+     * @throws SyntaxError
+     * @throws RuntimeError
+     * @throws LoaderError
+     */
+    public function getEmbedCode(): string
+    {
+        $twigTemplate = $this->getTemplate();
+        if (!$this->twig->getLoader()->exists($twigTemplate)) {
+            throw new \RuntimeException(
+                sprintf("ContentEditor: (%s): Нет шаблона в по указанному пути: %s", self::class, $twigTemplate)
+            );
+        }
+        return $this->twig->render(
+            $twigTemplate,
+            [
+                'editor' => $this,
+                'selector' => $this->getSelector()
+            ]
+        );
+    }
 }

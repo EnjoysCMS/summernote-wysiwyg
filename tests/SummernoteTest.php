@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Tests\EnjoysCMS\WYSIWYG\Summernote;
+namespace Tests\EnjoysCMS\ContentEditor\Summernote;
 
 use DI\Container;
 use DI\Definition\Source\DefinitionArray;

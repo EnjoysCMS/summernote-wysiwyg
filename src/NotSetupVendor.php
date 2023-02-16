@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace EnjoysCMS\WYSIWYG\Summernote;
+namespace EnjoysCMS\ContentEditor\Summernote;
 
 final class NotSetupVendor extends \Exception
 {
