@@ -15,11 +15,7 @@
             "Tests\\EnjoysCMS\\ContentEditor\\Summernote\\": "tests/"
         }
     },
-    "extra": {
-        "module-name": "Summernote WYSIWYG Editor",
-        "use-migrations": false
-    },
-    "scripts": {
+      "scripts": {
         "post-install-cmd": "EnjoysCMS\\ContentEditor\\Summernote\\Composer::assetsInstall",
         "post-update-cmd": "EnjoysCMS\\ContentEditor\\Summernote\\Composer::assetsInstall"
     },
