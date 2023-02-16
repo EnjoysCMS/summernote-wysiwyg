@@ -29,7 +29,15 @@ class Summernote implements ContentEditorInterface
         private ?string $template = null
     ) {
         if (!file_exists(__DIR__ . '/../node_modules/summernote')) {
-            throw new NotSetupVendor(sprintf('Run: cd %s/../ && yarn install', __DIR__));
+            $command = sprintf('cd %s && yarn install', realpath(__DIR__.'/..'));
+            try {
+                $result = passthru($command);
+                if ($result === false){
+                    throw new \Exception();
+                }
+            }catch (\Throwable){
+                throw new NotSetupVendor(sprintf('Run: %s', $command));
+            }
         }
 
         $this->initialize();
