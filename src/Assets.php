@@ -4,11 +4,9 @@ declare(strict_types=1);
 
 namespace EnjoysCMS\ContentEditor\Summernote;
 
-use Composer\Script\Event;
-
-final class Composer
+final class Assets
 {
-    public static function assetsInstall(Event $event)
+    public static function install(): void
     {
         passthru(sprintf('cd %s && yarn install', realpath(__DIR__.'/..')));
     }

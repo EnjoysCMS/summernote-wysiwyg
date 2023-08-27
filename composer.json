@@ -16,8 +16,8 @@
         }
     },
       "scripts": {
-        "post-install-cmd": "EnjoysCMS\\ContentEditor\\Summernote\\Composer::assetsInstall",
-        "post-update-cmd": "EnjoysCMS\\ContentEditor\\Summernote\\Composer::assetsInstall"
+        "post-install-cmd": "EnjoysCMS\\ContentEditor\\Summernote\\Assets::install",
+        "post-update-cmd": "EnjoysCMS\\ContentEditor\\Summernote\\Assets::install"
     },
     "require-dev": {
         "phpunit/phpunit": "^9.5"
