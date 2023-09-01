@@ -7,7 +7,9 @@
     },
     "autoload": {
         "psr-4": {
-            "EnjoysCMS\\ContentEditor\\Summernote\\": "src/"
+            "EnjoysCMS\\ContentEditor\\Summernote\\": "src/",
+            "EnjoysCMS\\ContentEditor\\Summernote\\Composer\\Scripts\\": "scripts/"
+
         }
     },
     "autoload-dev": {
@@ -16,8 +18,15 @@
         }
     },
       "scripts": {
-        "post-install-cmd": "EnjoysCMS\\ContentEditor\\Summernote\\Assets::install",
-        "post-update-cmd": "EnjoysCMS\\ContentEditor\\Summernote\\Assets::install"
+          "summernote-assets-install": "EnjoysCMS\\ContentEditor\\Summernote\\Composer\\Scripts\\AssetsInstallCommand",
+          "post-install-cmd": [
+              "echo -e \"\\x1b[1mSummernote\\x1b[00m\"",
+              "@summernote-assets-install"
+          ],
+          "post-update-cmd": [
+              "echo -e \"\\x1b[1mSummernote\\x1b[00m\"",
+              "@summernote-assets-install"
+          ]
     },
     "require-dev": {
         "phpunit/phpunit": "^9.5"
