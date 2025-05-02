@@ -1,0 +1,11 @@
+{
+    "cmd": {
+        "Assets install": [
+            "yarn",
+            "install"
+        ]
+    },
+    "symlink": {
+        "node_modules": "/modules/summernote/node_modules"
+    }
+}
