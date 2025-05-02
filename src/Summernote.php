@@ -6,11 +6,11 @@ namespace EnjoysCMS\ContentEditor\Summernote;
 
 
 use Enjoys\AssetsCollector;
+use Enjoys\AssetsCollector\Assets;
 use EnjoysCMS\Core\ContentEditor\ContentEditorInterface;
 use Exception;
 use Psr\Log\LoggerInterface;
 use RuntimeException;
-use Throwable;
 use Twig\Environment;
 use Twig\Error\LoaderError;
 use Twig\Error\RuntimeError;
@@ -64,13 +64,13 @@ class Summernote implements ContentEditorInterface
         }
 
 
-        $this->assets->add('css',
+        $this->assets->add(AssetsCollector\AssetType::CSS,
             [
                 __DIR__ . '/../node_modules/summernote/dist/summernote-bs4.min.css'
             ]
         );
 
-        $this->assets->add('js',
+        $this->assets->add(AssetsCollector\AssetType::JS,
             [
                 __DIR__ . '/../node_modules/summernote/dist/summernote-bs4.min.js',
                 __DIR__ . '/../node_modules/summernote/dist/lang/summernote-ru-RU.min.js'
