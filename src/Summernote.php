@@ -16,6 +16,8 @@ use Twig\Error\LoaderError;
 use Twig\Error\RuntimeError;
 use Twig\Error\SyntaxError;
 
+use function Enjoys\FileSystem\makeSymlink;
+
 
 class Summernote implements ContentEditorInterface
 {
@@ -32,15 +34,7 @@ class Summernote implements ContentEditorInterface
         private ?string $template = null
     ) {
         if (!file_exists(__DIR__ . '/../node_modules/summernote')) {
-            $command = sprintf('cd %s && yarn install', realpath(__DIR__.'/..'));
-            try {
-                $result = passthru($command);
-                if ($result === false){
-                    throw new Exception();
-                }
-            }catch (Throwable){
-                throw new RuntimeException(sprintf('Run: %s', $command));
-            }
+            throw new \RuntimeException(sprintf('Run: cd %s && yarn install', realpath(__DIR__ . '/..')));
         }
 
         $this->initialize();
@@ -58,11 +52,17 @@ class Summernote implements ContentEditorInterface
     {
         $path = str_replace(getenv('ROOT_PATH'), '', realpath(__DIR__ . '/../'));
 
-        AssetsCollector\Helpers::createSymlink(
-            sprintf('%s/assets%s/node_modules/summernote/dist', $_ENV['PUBLIC_DIR'], $path),
-            __DIR__ . '/../node_modules/summernote/dist',
-            $this->logger
-        );
+        $link = sprintf('%s/assets%s/node_modules/summernote/dist', $_ENV['PUBLIC_DIR'], $path);
+        $target = __DIR__ . '/../node_modules/summernote/dist';
+
+        try {
+            if (makeSymlink($link, $target)) {
+                $this->logger->info(sprintf('Created symlink: %s', $link));
+            }
+        } catch (\Exception $e) {
+            $this->logger->notice($e->getMessage());
+        }
+
 
         $this->assets->add('css',
             [
